@@ -1,0 +1,208 @@
+// цвет рамок и фона
+$gray: #ccc;
+
+// высота меню
+$menuH: 50px;
+
+// переход к мобильной версии
+$break: 730px;
+
+// ширина всей страницы с меню
+$width: 1000px;
+
+// минимальная высота средней части
+$middleH: 500px;
+
+// время плавной анимации показа меню
+$delay: 0.35s;
+
+/*
+ * — Миксины —
+ */
+/* флексбокс хэлпер */
+@mixin alignment-by-axes() {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-justify-content: space-between;
+  -webkit-align-items: center;
+  @media (max-width: $break) {
+    flex-direction: column;
+    -webkit-flex-direction: column;
+  }
+}
+
+/* сменяем формат отображения при переходе к мобильной версии */
+@mixin auto-block() {
+  display: block;
+  height: auto;
+}
+
+/* Центруем wrap и footer */
+@mixin fix-container() {
+  max-width: $width;
+  margin: 10px auto;
+}
+
+#wrap {
+  min-height: 100%;
+  @include fix-container();
+  header {
+    position: relative;
+    height: $menuH;
+    border: 1px solid $gray;
+    .burger {
+      cursor: pointer;
+      display: none;
+      position: absolute;
+      right: 7%;
+      top: 10px;
+      width: 30px;
+      height: 30px;
+      background: url("../../img/list.svg");
+      background-size: contain;
+      @media (max-width: $break) {
+        display: block;
+      }
+    }
+    ul {
+      height: 100%;
+      @include alignment-by-axes();
+      li {
+        position: relative;
+        display: table;
+        height: 100%;
+        a {
+          display: table-cell;
+          height: 100%;
+          vertical-align: middle;
+          text-decoration: none;
+          padding: 0 15px;
+          @media (max-width: $break) {
+            @include auto-block();
+            padding: 15px;
+          }
+        }
+        &:hover {
+          background: $gray;
+        }
+        &:hover ul.sub {
+          left: 0;
+          opacity: 1;
+          border-top: 1px dotted $gray;
+          @media (max-width: $break) {
+            margin-top: -5px;
+            display: block;
+          }
+        }
+        &:hover .arrow {
+          background: url("../../img/up-arrow.svg");
+          background-size: contain;
+        }
+        .sub {
+          display: block;
+          left: -5555px;
+          opacity: 0;
+          position: absolute;
+          top: $menuH;
+          transition: $delay linear opacity;
+          -webkit-transition: $delay linear opacity;
+          li {
+            border-bottom: 1px solid $gray;
+            border-left: 1px solid $gray;
+            border-right: 1px solid $gray;
+            min-width: 250px;
+            white-space: nowrap;
+            background: #f1f1f1;
+            a {
+              padding: 15px;
+            }
+            &:hover a {
+              background: $gray;
+              opacity: 0.85;
+            }
+          }
+          @media (max-width: $break) {
+            position: static;
+            left: 0;
+            display: none;
+          }
+        }
+        .arrow {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          position: absolute;
+          right: 44%;
+          top: 65%;
+          background: url("../../img/down-arrow.svg");
+          background-size: contain;
+          @media (max-width: $break) {
+            right: 50%;
+            top: 40%;
+          }
+        }
+        @media (max-width: $break) {
+          @include auto-block();
+          width: 100%;
+        }
+      }
+      @media (max-width: $break) {
+        /*display: none;*/
+        height: auto;
+      }
+    }
+    @media (max-width: $break) {
+      height: auto;
+    }
+  }
+
+  /*
+   * Средняя часть страницы section — для примера *
+   */
+  section {
+    min-height: $middleH;
+    margin: 10% 0 0 0;
+    border: 1px solid $gray;
+    padding: 25px;
+    p {
+      margin: 10px 0;
+    }
+    .flx {
+      min-height: 300px;
+      @include alignment-by-axes();
+      opacity: 0.4;
+      p {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    @media (max-width: $break) {
+      margin-top: 50px;
+    }
+  }
+  /*
+   * Section End
+   */
+
+  @media (max-width: $break) {
+    margin: 0;
+  }
+}
+
+/*
+ * Подвал — для примера *
+ */
+footer {
+  @include fix-container();
+  padding: 2% 0;
+  border: 1px solid $gray;
+  @include alignment-by-axes();
+  p {
+    width: 100%;
+    text-align: center;
+  }
+}
