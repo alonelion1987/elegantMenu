@@ -1,0 +1,9 @@
+.idea
+node_modules
+package.json
+gulpfile.js
+src/*/**
+!src/css/reset.css
+!src/css/min/
+!src/js/min/
+!src/img/
